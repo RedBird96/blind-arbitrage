@@ -1,5 +1,5 @@
-# simple-blind-arbitrage
-This repository contains a simple, mechanical system for blindly submitting atomic arbitrage opportunities to the Flashbots MEV-Share Node. For more details on MEV-Share please see this [beta launch announcement](https://collective.flashbots.net/t/announcing-mev-share-beta/1650) and the [docs](https://docs.flashbots.net/flashbots-mev-share/overview). For high level design details see [the design document on the Flashbots Forum](https://collective.flashbots.net/t/mev-share-programmably-private-orderflow-to-share-mev-with-users/1264).
+# blind-arbitrage
+This repository contains a mechanical system for blindly submitting atomic arbitrage opportunities to the Flashbots MEV-Share Node. For more details on MEV-Share please see this [beta launch announcement](https://collective.flashbots.net/t/announcing-mev-share-beta/1650) and the [docs](https://docs.flashbots.net/flashbots-mev-share/overview). For high level design details see [the design document on the Flashbots Forum](https://collective.flashbots.net/t/mev-share-programmably-private-orderflow-to-share-mev-with-users/1264).
 
 Although user trade details are hidden by default to prevent frontrunning, this script can atomically backrun Uniswap v2 transactions from the Node **by calculating the optimal arbitrage between two Uniswap v2 pools entirely on-chain**. Off-chain logic is relatively simple and no trade details are needed beyond the pool that the user is trading on to discover and attempt to execute atomic arbitrage opportunities.
 
@@ -11,12 +11,12 @@ This script is intended to be used as an example of blind atomic MEV and how to 
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/simple-blind-arbitrage.git
+git clone https://github.com/yourusername/blind-arbitrage.git
 ```
 
 2. Change to the project directory:
 ```bash
-cd simple-blind-arbitrage/execute
+cd blind-arbitrage/execute
 ```
 
 3. Install the required dependencies:
@@ -41,7 +41,7 @@ Replace <YOUR_RPC_URL> with the URL of your Ethereum RPC provider, <YOUR_PRIVATE
 By default this bot bids 50% of its profits to `block.coinbase` but this can be configured by changing `percentageToKeep` in the [config file](./execute/utils/config.json). After a short time after open sourcing it is likely that you will need to increase `percentageToKeep` for your bundles to be competitive.
 
 ### Usage
-To start listening to the Flashbots MEV-Share Node and submitting blind arbitrage transactions, run the following command:
+To start listening to the MEV-Share Node and submitting blind arbitrage transactions, run the following command:
 ```bash
 node index.js -n <network>
 ```
@@ -63,9 +63,9 @@ Before using this tool, make sure you have the following software installed on y
 The tool requires a private key for signing transactions. Make sure you don't share your private key or .env file with anyone or commit it to a public repository.
 
 ### Contributing, improvements, and further work
-Contributions are welcome! If you'd like to contribute to this project, feel free to open a pull request. `simple-blind-arbitrage` is a starting point that can be extended to encompass other MEV strategies. Here are a few improvements we would like to see:
+Contributions are welcome! If you'd like to contribute to this project, feel free to open a pull request. `blind-arbitrage` is a starting point that can be extended to encompass other MEV strategies. Here are a few improvements we would like to see:
 - Extending the bot to arb across more pools than two.
-- Using a [specialized smart contract to more efficiently query the chain](https://github.com/flashbots/simple-arbitrage/blob/master/contracts/UniswapFlashQuery.sol) for information. All the calls made off-chain can in theory be replaced with a single call.
+- Using a [specialized smart contract to more efficiently query the chain](https://github.com/username/arbitrage/blob/master/contracts/UniswapFlashQuery.sol) for information. All the calls made off-chain can in theory be replaced with a single call.
 - Loading all Uniswap v2 pairs upfront instead of checking for them at runtime.
 - Using flashloans instead of relying on upfront capital.
 - Checking for pools from other Uniswap v2 forks beyond Uniswap and Sushiswap.
